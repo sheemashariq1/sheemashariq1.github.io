@@ -5,40 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sheema Shariq</title>
   <meta name="description" content="CS student at Jamia Millia Islamia building AI-powered web products.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Georgia, serif; max-width: 680px; margin: 60px auto; padding: 0 20px; line-height: 1.6; color: #222; background: #fafaf7; }
-    h1 { font-size: 2.2rem; margin-bottom: 4px; }
-    h2 { margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 6px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
-    a { color: #1a56db; }
-    .sub { color: #666; margin-top: 0; }
-    .tags span { display: inline-block; background: #eee; padding: 2px 10px; margin: 3px 3px 3px 0; border-radius: 4px; font-family: monospace; font-size: 0.9rem; }
+    :root { --bg:#f6f3ec; --ink:#1c1b19; --muted:#6b675f; --line:#dcd6c8; --accent:#c2410c; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#141412; --ink:#ece8de; --muted:#9a958a; --line:#2e2c27; --accent:#fb923c; }
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.7 Inter, sans-serif; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 72px 24px 48px; }
+    h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 700; }
+    h1 { font-size: clamp(2.6rem, 8vw, 4rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -1px; }
+    h2 { font-size: .8rem; font-family: Inter, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin: 0; }
+    .lead { font-size: 1.25rem; color: var(--muted); max-width: 560px; }
+    .lead b { color: var(--ink); font-weight: 500; }
+    section { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 36px 0; border-top: 1px solid var(--line); margin-top: 48px; }
+    section + section { margin-top: 0; }
+    @media (max-width: 600px) { section { grid-template-columns: 1fr; gap: 12px; } }
+    a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 2px; }
+    a:hover { color: var(--accent); }
+    .project h3 { font-family: Fraunces, serif; font-size: 1.5rem; margin: 0 0 6px; }
+    .project p { margin: 0 0 10px; color: var(--muted); }
+    .stack { font-size: .85rem; color: var(--accent); letter-spacing: .5px; }
+    .job { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; }
+    .job span { color: var(--muted); font-size: .9rem; white-space: nowrap; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tags span { border: 1px solid var(--line); padding: 3px 14px; border-radius: 99px; font-size: .9rem; }
+    footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 24px; }
   </style>
 </head>
 <body>
+<div class="wrap">
 
   <h1>Sheema Shariq</h1>
-  <p class="sub">B.Sc. (Hons.) Computer Science, Jamia Millia Islamia, New Delhi</p>
-  <p>I build AI-powered web products and I'm working towards a career in tech research.</p>
+  <p class="lead">Computer Science student at <b>Jamia Millia Islamia, New Delhi</b>. I build AI-powered web products and I'm working towards a career in tech research.</p>
 
-  <h2>Featured work</h2>
-  <p><b><a href="YOUR_EXMENTIFY_LINK">Exmentify</a></b> — AI exam-prep platform with flashcards, cheat sheets and mistake diagnosis. IBM SkillsBuild × AICTE final project.<br>
-  <small>FastAPI, Gemini API, Docker, AWS</small></p>
+  <section>
+    <h2>Featured work</h2>
+    <div class="project">
+      <h3><a href="https://github.com/sheemashariq1/Exmentify">Exmentify</a></h3>
+      <p>AI exam-prep platform with flashcards, cheat sheets and mistake diagnosis. Final project for IBM SkillsBuild × AICTE.</p>
+      <div class="stack">FastAPI · Gemini API · Docker · AWS</div>
+    </div>
+  </section>
 
-  <h2>Experience</h2>
-  <ul>
-    <li><b>AI/ML Intern</b>, IBM SkillsBuild × BharatCares (AICTE), June to July 2026</li>
-    <li><b>Technical Team Member</b>, SoarJMI</li>
-    <li><b>Campus Representative</b>, GeeksforGeeks</li>
-  </ul>
+  <section>
+    <h2>Experience</h2>
+    <div>
+      <div class="job"><div><b>AI/ML Intern</b>, IBM SkillsBuild × BharatCares (AICTE)</div><span>Jun – Jul 2026</span></div>
+      <div class="job"><div><b>Technical Team Member</b>, SoarJMI</div></div>
+      <div class="job"><div><b>Campus Representative</b>, GeeksforGeeks</div></div>
+    </div>
+  </section>
 
-  <h2>Tech</h2>
-  <div class="tags">
-    <span>Python</span><span>C++</span><span>C</span><span>SQL</span><span>JavaScript</span>
-    <span>HTML/CSS</span><span>FastAPI</span><span>Docker</span><span>AWS</span><span>Git</span>
-  </div>
+  <section>
+    <h2>Tech</h2>
+    <div class="tags">
+      <span>Python</span><span>C++</span><span>C</span><span>SQL</span><span>JavaScript</span>
+      <span>HTML/CSS</span><span>FastAPI</span><span>Docker</span><span>AWS</span><span>Git</span>
+    </div>
+  </section>
 
-  <h2>Connect</h2>
-  <p><a href="https://github.com/sheemashariq1">GitHub</a> · <a href="mailto:YOUR_EMAIL">Email</a></p>
+  <section>
+    <h2>Connect</h2>
+    <div><a href="https://github.com/sheemashariq1">GitHub</a> &nbsp;·&nbsp; <a href="mailto:sheemashariq10@gmail.com">Email</a></div>
+  </section>
 
+  <footer>© 2026 Sheema Shariq</footer>
+
+</div>
 </body>
 </html>
