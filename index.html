@@ -1,79 +1,875 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>Sheema Shariq</title>
-  <meta name="description" content="CS student at Jamia Millia Islamia building AI-powered web products.">
+  <meta name="description" content="Computer Science student at Jamia Millia Islamia building AI-powered web products.">
+  <meta property="og:title" content="Sheema Shariq">
+  <meta property="og:description" content="Computer Science student at Jamia Millia Islamia building AI-powered web products.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234b3fe4'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='Georgia,serif'%3ES%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    // set the saved theme before first paint so the page does not flash
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved) document.documentElement.dataset.theme = saved;
+    } catch (e) {}
+  </script>
   <style>
-    :root { --bg:#f6f3ec; --ink:#1c1b19; --muted:#6b675f; --line:#dcd6c8; --accent:#c2410c; }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg:#141412; --ink:#ece8de; --muted:#9a958a; --line:#2e2c27; --accent:#fb923c; }
+    :root {
+      --bg: #f2f1f7;
+      --surface: #e9e7f3;
+      --ink: #17162a;
+      --muted: #5d5b76;
+      --line: #d8d6e6;
+      --accent: #4b3fe4;
+      --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+      --sans: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color-scheme: light;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #12111d;
+        --surface: #1b1a2b;
+        --ink: #ecebf7;
+        --muted: #9d9bba;
+        --line: #2a2840;
+        --accent: #a79bff;
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #12111d;
+      --surface: #1b1a2b;
+      --ink: #ecebf7;
+      --muted: #9d9bba;
+      --line: #2a2840;
+      --accent: #a79bff;
+      color-scheme: dark;
+    }
+
     * { box-sizing: border-box; }
-    body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.7 Inter, sans-serif; }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 72px 24px 48px; }
-    h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 700; }
-    h1 { font-size: clamp(2.6rem, 8vw, 4rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -1px; }
-    h2 { font-size: .8rem; font-family: Inter, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin: 0; }
-    .lead { font-size: 1.25rem; color: var(--muted); max-width: 560px; }
-    .lead b { color: var(--ink); font-weight: 500; }
-    section { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 36px 0; border-top: 1px solid var(--line); margin-top: 48px; }
-    section + section { margin-top: 0; }
-    @media (max-width: 600px) { section { grid-template-columns: 1fr; gap: 12px; } }
-    a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 2px; }
+
+    html { scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--ink); text-decoration-color: var(--accent); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
     a:hover { color: var(--accent); }
-    .project h3 { font-family: Fraunces, serif; font-size: 1.5rem; margin: 0 0 6px; }
-    .project p { margin: 0 0 10px; color: var(--muted); }
-    .stack { font-size: .85rem; color: var(--accent); letter-spacing: .5px; }
-    .job { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; }
-    .job span { color: var(--muted); font-size: .9rem; white-space: nowrap; }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tags span { border: 1px solid var(--line); padding: 3px 14px; border-radius: 99px; font-size: .9rem; }
-    footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 24px; }
+
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .layout {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 80px;
+    }
+
+    /* left rail stays in view while the page scrolls */
+    .rail {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      padding: 72px 0 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .name {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 2.9rem;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .role-line {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav { margin: 40px 0 0; padding: 0; list-style: none; }
+
+    .nav a {
+      display: block;
+      padding: 6px 0 6px 14px;
+      border-left: 2px solid var(--line);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav a:hover { color: var(--ink); }
+
+    .nav a[aria-current="true"] {
+      color: var(--ink);
+      border-left-color: var(--accent);
+    }
+
+    .theme-btn {
+      margin-top: auto;
+      align-self: flex-start;
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .theme-btn:hover { border-color: var(--accent); }
+
+    main { padding: 72px 0 40px; min-width: 0; }
+
+    .hero-line {
+      margin: 0;
+      max-width: 620px;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4.6vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-line .w { opacity: 0; transition: opacity 0.3s; }
+    .hero-line .w.on { opacity: 1; }
+
+    .caret {
+      display: inline-block;
+      width: 2px;
+      height: 0.9em;
+      margin-left: 3px;
+      vertical-align: -0.08em;
+      background: var(--accent);
+      animation: blink 1s steps(2, start) infinite;
+    }
+
+    .caret.done { display: none; }
+
+    @keyframes blink { to { visibility: hidden; } }
+
+    .hero-sub {
+      margin: 20px 0 0;
+      max-width: 520px;
+      color: var(--muted);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 0;
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    section { padding-top: 88px; scroll-margin-top: 24px; }
+
+    h2 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-size: 2.1rem;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .section-note { margin: 0 0 24px; color: var(--muted); max-width: 520px; }
+
+    /* filter chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+
+    .chip {
+      padding: 5px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .chip:hover { border-color: var(--accent); }
+
+    .chip[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .chip .count { margin-left: 6px; opacity: 0.65; }
+
+    .filter-status { min-height: 1.65em; margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+
+    .clear {
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--ink);
+      font: inherit;
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+
+    /* projects */
+    .projects { border-bottom: 1px solid var(--line); }
+
+    .project { border-top: 1px solid var(--line); transition: opacity 0.25s; }
+    .project.is-dim { opacity: 0.35; }
+    .project.is-match .p-title { color: var(--accent); }
+
+    .project summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto 20px;
+      align-items: start;
+      gap: 16px;
+      padding: 22px 0;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .project summary::-webkit-details-marker { display: none; }
+
+    .p-title {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      line-height: 1.15;
+      transition: color 0.2s;
+    }
+
+    .project summary:hover .p-title { color: var(--accent); }
+
+    .p-line { display: block; margin-top: 4px; color: var(--muted); font-size: 15px; }
+
+    .p-meta { padding-top: 8px; color: var(--muted); font-size: 13px; white-space: nowrap; }
+
+    .p-icon { position: relative; width: 14px; height: 14px; margin-top: 11px; justify-self: end; }
+
+    .p-icon::before, .p-icon::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 14px;
+      height: 2px;
+      background: var(--muted);
+      transition: transform 0.25s;
+    }
+
+    .p-icon::after { transform: rotate(90deg); }
+
+    .project[open] .p-icon::after { transform: rotate(0); }
+
+    .p-body {
+      margin: 0 0 24px;
+      padding: 22px 24px;
+      border-radius: 10px;
+      background: var(--surface);
+    }
+
+    .p-body p { margin: 0 0 12px; }
+
+    .p-body ul { margin: 0 0 14px; padding-left: 18px; color: var(--muted); }
+    .p-body li { margin: 3px 0; }
+
+    .built-with { color: var(--muted); font-size: 14px; }
+    .built-with b { color: var(--ink); font-weight: 500; }
+
+    .links { display: flex; flex-wrap: wrap; gap: 20px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 15px; font-weight: 500; }
+
+    /* small architecture diagram */
+    .flow { margin: 18px 0 6px; }
+
+    .flow-title { margin: 0 0 8px; color: var(--muted); font-size: 13px; }
+
+    .flow ol { display: flex; align-items: center; margin: 0 0 16px; padding: 0; list-style: none; }
+
+    .flow li {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .flow li + li { position: relative; margin-left: 28px; }
+
+    .flow li + li::before {
+      content: "";
+      position: absolute;
+      left: -29px;
+      top: 50%;
+      width: 28px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    /* roles and education */
+    .rows { border-bottom: 1px solid var(--line); }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .row h3 { margin: 0; font-size: 16px; font-weight: 600; }
+    .row .org { color: var(--muted); }
+    .row p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+    .row .when { color: var(--muted); font-size: 13px; white-space: nowrap; padding-top: 3px; }
+
+    .group + .group { margin-top: 24px; }
+    .group h3 { margin: 0 0 10px; font-size: 14px; font-weight: 500; color: var(--muted); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+
+    .tags li {
+      padding: 4px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    .cert-list { margin: 28px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 15px; }
+    .cert-list li { padding: 5px 0; }
+
+    .contact-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 0; padding: 0; list-style: none; font-size: 18px; }
+
+    .copy-row { display: flex; align-items: center; gap: 12px; margin-top: 22px; font-size: 14px; color: var(--muted); }
+
+    .copy-btn {
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .copy-btn:hover { border-color: var(--accent); }
+
+    footer {
+      margin-top: 96px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .layout { display: block; padding: 0 22px; }
+
+      .rail { position: static; height: auto; padding: 44px 0 0; }
+
+      .name { font-size: 2.6rem; }
+
+      .nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+
+      .nav a {
+        padding: 4px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+      }
+
+      .nav a[aria-current="true"] { border-color: var(--accent); }
+
+      .theme-btn { margin-top: 18px; }
+
+      main { padding-top: 48px; }
+
+      section { padding-top: 64px; }
+    }
+
+    @media (max-width: 560px) {
+      .project summary { grid-template-columns: minmax(0, 1fr) 20px; }
+      .p-meta { grid-column: 1; grid-row: 2; padding-top: 0; }
+      .p-icon { grid-column: 2; grid-row: 1; }
+
+      .p-body { padding: 18px; }
+
+      .flow ol { flex-direction: column; align-items: flex-start; }
+      .flow li + li { margin: 22px 0 0 16px; }
+      .flow li + li::before { left: 50%; top: -23px; width: 1.5px; height: 22px; }
+
+      .row { grid-template-columns: 1fr; gap: 2px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; animation: none !important; }
+      .hero-line .w { opacity: 1; }
+    }
   </style>
 </head>
 <body>
-<div class="wrap">
+  <div class="layout">
 
-  <h1>Sheema Shariq</h1>
-  <p class="lead">Computer Science student at <b>Jamia Millia Islamia, New Delhi</b>. I build AI-powered web products and I'm working towards a career in tech research.</p>
+    <aside class="rail">
+      <h1 class="name">Sheema Shariq</h1>
+      <p class="role-line">B.Sc. (Hons.) Computer Science, Jamia Millia Islamia</p>
 
-  <section>
-    <h2>Featured work</h2>
-    <div class="project">
-      <h3><a href="https://github.com/sheemashariq1/Exmentify">Exmentify</a></h3>
-      <p>AI exam-prep platform with flashcards, cheat sheets and mistake diagnosis. Final project for IBM SkillsBuild × AICTE.</p>
-      <div class="stack">FastAPI · Gemini API · Docker · AWS</div>
-    </div>
-  </section>
+      <nav aria-label="Sections">
+        <ul class="nav">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#community">Community</a></li>
+          <li><a href="#tech">Tech</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
 
-  <section>
-    <h2>Experience</h2>
-    <div>
-      <div class="job"><div><b>AI/ML Intern</b>, IBM SkillsBuild × BharatCares (AICTE)</div><span>Jun – Jul 2026</span></div>
-      <div class="job"><div><b>Technical Team Member</b>, SoarJMI</div></div>
-      <div class="job"><div><b>Campus Representative</b>, GeeksforGeeks</div></div>
-    </div>
-  </section>
+      <button class="theme-btn" id="theme-btn" type="button">Dark mode</button>
+    </aside>
 
-  <section>
-    <h2>Tech</h2>
-    <div class="tags">
-      <span>Python</span><span>C++</span><span>C</span><span>SQL</span><span>JavaScript</span>
-      <span>HTML/CSS</span><span>FastAPI</span><span>Docker</span><span>AWS</span><span>Git</span>
-    </div>
-  </section>
+    <main>
+      <p class="hero-line" id="hero-line">I build AI-powered web products, and I'm working towards a career in tech research.</p>
+      <p class="hero-sub">Second-year Computer Science student at Jamia Millia Islamia, New Delhi. Right now I'm learning how to take LLM apps from a prototype to something tested, containerised and deployed.</p>
+      <p class="status">Open to internships and project collaborations</p>
 
-  <section>
-    <h2>Connect</h2>
-    <div><a href="https://github.com/sheemashariq1">GitHub</a> &nbsp;·&nbsp; <a href="mailto:sheemashariq10@gmail.com">Email</a></div>
-  </section>
+      <section id="work">
+        <h2>Work</h2>
+        <p class="section-note">Four projects I have built. Open one for the details, or pick a technology to see where I used it.</p>
 
-  <footer>© 2026 Sheema Shariq</footer>
+        <div class="chips" id="chips" role="group" aria-label="Filter projects by technology">
+          <button class="chip" type="button" data-tag="python">Python</button>
+          <button class="chip" type="button" data-tag="javascript">JavaScript</button>
+          <button class="chip" type="button" data-tag="typescript">TypeScript</button>
+          <button class="chip" type="button" data-tag="fastapi">FastAPI</button>
+          <button class="chip" type="button" data-tag="react">React</button>
+          <button class="chip" type="button" data-tag="streamlit">Streamlit</button>
+          <button class="chip" type="button" data-tag="gemini">Gemini API</button>
+          <button class="chip" type="button" data-tag="scikit-learn">scikit-learn</button>
+          <button class="chip" type="button" data-tag="langchain">LangChain</button>
+          <button class="chip" type="button" data-tag="mysql">MySQL</button>
+          <button class="chip" type="button" data-tag="docker">Docker</button>
+          <button class="chip" type="button" data-tag="aws">AWS</button>
+          <button class="chip" type="button" data-tag="github-actions">GitHub Actions</button>
+          <button class="chip" type="button" data-tag="pytest">pytest</button>
+        </div>
+        <p class="filter-status" id="filter-status" aria-live="polite"></p>
 
-</div>
+        <div class="projects">
+
+          <details class="project" data-tech="python fastapi javascript gemini docker aws" open>
+            <summary>
+              <span>
+                <span class="p-title">Exmentify</span>
+                <span class="p-line">AI exam-prep platform that streams study material as it is written</span>
+              </span>
+              <span class="p-meta">2026</span>
+              <span class="p-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="p-body">
+              <p>Generates personalised study content, cheat sheets and topic explanations with the Gemini API, streamed to the browser over server-sent events. The full GATE CS syllabus is built, and other exam tracks are planned. It was the final project of my IBM SkillsBuild Gen AI and Cloud Computing internship.</p>
+              <ul>
+                <li>Flashcards, mistake diagnosis and goal tracking</li>
+                <li>Mermaid.js diagrams and client-side PDF export</li>
+                <li>Frontend in vanilla JavaScript, HTML and CSS</li>
+              </ul>
+
+              <div class="flow">
+                <p class="flow-title">How a request flows</p>
+                <ol aria-label="Request flow">
+                  <li>FastAPI backend</li>
+                  <li>Gemini API, streamed over SSE</li>
+                  <li>JavaScript frontend</li>
+                </ol>
+                <p class="flow-title">How it is deployed</p>
+                <ol aria-label="Deployment flow">
+                  <li>Docker image</li>
+                  <li>AWS Elastic Beanstalk</li>
+                  <li>CloudFront, HTTPS</li>
+                </ol>
+              </div>
+
+              <p class="built-with"><b>Built with</b> Python, FastAPI, JavaScript, Gemini API, Docker, AWS</p>
+              <ul class="links">
+                <li><a href="https://d1vcdm3hqyivum.cloudfront.net/">Live demo</a></li>
+                <li><a href="https://github.com/sheemashariq1/Exmentify">GitHub</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="project" data-tech="python fastapi scikit-learn langchain gemini">
+            <summary>
+              <span>
+                <span class="p-title">exmentify-ml</span>
+                <span class="p-line">Predicts which topics a student is weak in</span>
+              </span>
+              <span class="p-meta">2026</span>
+              <span class="p-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="p-body">
+              <p>An ML layer for Exmentify, trained with scikit-learn on simulated attempt data (ROC-AUC 0.70, about 67% accuracy). Predictions are served through FastAPI endpoints and deployed on Render.</p>
+              <ul>
+                <li>Weak-topic heatmap dashboard</li>
+                <li>LangChain and Gemini explanation for each prediction</li>
+              </ul>
+              <p class="built-with"><b>Built with</b> Python, scikit-learn, FastAPI, LangChain, Gemini API</p>
+              <ul class="links">
+                <li><a href="https://exmentify-ml.onrender.com/ml/dashboard">Live dashboard</a></li>
+                <li><a href="https://github.com/sheemashariq1/exmentify-ml">GitHub</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="project" data-tech="python fastapi streamlit mysql docker aws github-actions pytest">
+            <summary>
+              <span>
+                <span class="p-title">MNC Management System</span>
+                <span class="p-line">My Class 12 console project, rebuilt as a full-stack app</span>
+              </span>
+              <span class="p-meta">Oct – Nov 2026</span>
+              <span class="p-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="p-body">
+              <p>An employee management system with a FastAPI REST API (23 endpoints), a Streamlit dashboard and a normalised MySQL schema with foreign keys, a connection pool and paged lists.</p>
+              <ul>
+                <li>JWT login with bcrypt hashing and role-based access (admin, HR, IT) with department-level data scoping</li>
+                <li>Login lockout, parameterised queries and an audit log of every change</li>
+                <li>178 automated tests run through GitHub Actions</li>
+                <li>Docker Compose, deployed on AWS EC2 with HTTPS</li>
+              </ul>
+              <p class="built-with"><b>Built with</b> Python, FastAPI, Streamlit, MySQL, Docker, AWS, GitHub Actions, pytest</p>
+              <ul class="links">
+                <li><a href="https://skillway-mnc.duckdns.org">Live demo (login on request)</a></li>
+                <li><a href="https://github.com/sheemashariq1/MNC_Management_System">GitHub</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="project" data-tech="javascript typescript react gemini">
+            <summary>
+              <span>
+                <span class="p-title">KisanConnect</span>
+                <span class="p-line">Farmer-to-buyer marketplace, a Smart India Hackathon team project</span>
+              </span>
+              <span class="p-meta">SIH 2026</span>
+              <span class="p-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="p-body">
+              <p>A working prototype with separate farmer, buyer and admin portals, available in 8 Indian languages. It runs on in-memory demo data.</p>
+              <ul>
+                <li>AI crop scan: a serverless function sends the photo to the Gemini vision API and returns a quality grade and spoilage estimate</li>
+                <li>Mandi price comparison, live bargaining and escrow-tracked settlement</li>
+              </ul>
+              <p class="built-with"><b>Built with</b> React, TypeScript, Tailwind CSS, Vite, Vercel serverless functions, Gemini API</p>
+              <ul class="links">
+                <li><a href="https://kisanconnect-sih.vercel.app">Live demo</a></li>
+                <li><a href="https://github.com/sheemashariq1/SIH_Project_2026">GitHub</a></li>
+              </ul>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2>Experience</h2>
+        <div class="rows" style="margin-top: 24px;">
+          <div class="row">
+            <div>
+              <h3>AI/ML Intern <span class="org">at IBM SkillsBuild × BharatCares (AICTE)</span></h3>
+              <p>Built the weak-topic prediction layer for Exmentify and deployed it on Render.</p>
+            </div>
+            <span class="when">Aug – Sep 2026</span>
+          </div>
+          <div class="row">
+            <div>
+              <h3>Gen AI &amp; Cloud Computing Intern <span class="org">at IBM SkillsBuild × BharatCares (AICTE)</span></h3>
+              <p>Built and deployed Exmentify end to end as the final internship project.</p>
+            </div>
+            <span class="when">Jun – Jul 2026</span>
+          </div>
+          <div class="row">
+            <div>
+              <h3>Campus Representative <span class="org">at GeeksforGeeks</span></h3>
+            </div>
+            <span class="when">Jun 2026 – Present</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="community">
+        <h2>Community</h2>
+        <div class="rows" style="margin-top: 24px;">
+          <div class="row"><div><h3>Lead Organiser <span class="org">at HIVE Coding Society (JMI)</span></h3></div></div>
+          <div class="row"><div><h3>Operations Co-Head <span class="org">at Coding Council (JMI)</span></h3></div></div>
+          <div class="row"><div><h3>Technical Team Member <span class="org">at SoarJMI (JMI)</span></h3></div></div>
+        </div>
+      </section>
+
+      <section id="tech">
+        <h2>Tech</h2>
+        <div style="margin-top: 24px;">
+          <div class="group">
+            <h3>Languages</h3>
+            <ul class="tags">
+              <li>Python</li><li>C++</li><li>C</li><li>SQL</li><li>JavaScript</li><li>TypeScript</li><li>HTML/CSS</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Frameworks and libraries</h3>
+            <ul class="tags">
+              <li>FastAPI</li><li>Streamlit</li><li>React</li><li>Tailwind CSS</li><li>scikit-learn</li><li>LangChain</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Tools and platforms</h3>
+            <ul class="tags">
+              <li>Git</li><li>GitHub Actions</li><li>Docker</li><li>AWS</li><li>MySQL</li><li>pytest</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="education">
+        <h2>Education</h2>
+        <div class="rows" style="margin-top: 24px;">
+          <div class="row">
+            <div>
+              <h3>B.Sc. (Hons.) Computer Science <span class="org">at Jamia Millia Islamia, New Delhi</span></h3>
+            </div>
+            <span class="when">2025 – Present</span>
+          </div>
+          <div class="row">
+            <div>
+              <h3>Class 12, Science (PCM + Computer Science) <span class="org">at Dev Samaj Modern School No-2</span></h3>
+            </div>
+            <span class="when">2024 – 2025</span>
+          </div>
+        </div>
+
+        <ul class="cert-list">
+          <li>IBM SkillsBuild × BharatCares ML &amp; Applied AI Internship, certificate of training</li>
+          <li>NoviTech R&amp;D 30 Days Masterclass, Full Stack Development and Data Analytics</li>
+          <li>DSA Sprint 2026, Coding Council JMI</li>
+          <li>GeeksforGeeks 30-Day DSA Learning Streak</li>
+          <li>100 Days of Code: The Complete Python Pro Bootcamp (Udemy), in progress</li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p class="section-note">I'm open to internships and project collaborations. Email is the quickest way to reach me.</p>
+        <ul class="contact-links">
+          <li><a href="mailto:sheemashariq10@gmail.com">Email</a></li>
+          <li><a href="https://www.linkedin.com/in/sheema-shariq-436678366">LinkedIn</a></li>
+          <li><a href="https://github.com/sheemashariq1">GitHub</a></li>
+          <li><a href="https://leetcode.com/u/SHEEMA_SHARIQ">LeetCode</a></li>
+          <li><a href="https://www.geeksforgeeks.org/profile/sheemash17x8">GeeksforGeeks</a></li>
+        </ul>
+        <div class="copy-row">
+          <button class="copy-btn" id="copy-btn" type="button">Copy email address</button>
+          <span id="copy-status" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <footer>© 2026 Sheema Shariq</footer>
+    </main>
+  </div>
+
+  <script>
+    var root = document.documentElement;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // the intro line streams in word by word, like a model response
+    (function () {
+      var el = document.getElementById('hero-line');
+      if (reduceMotion) return;
+
+      var words = el.textContent.trim().split(/\s+/);
+      el.textContent = '';
+
+      var spans = words.map(function (word, i) {
+        var s = document.createElement('span');
+        s.className = 'w';
+        s.textContent = word + (i < words.length - 1 ? ' ' : '');
+        el.appendChild(s);
+        return s;
+      });
+
+      var caret = document.createElement('span');
+      caret.className = 'caret';
+      el.appendChild(caret);
+
+      var i = 0;
+      function next() {
+        if (i < spans.length) {
+          spans[i].classList.add('on');
+          i += 1;
+          setTimeout(next, 70 + Math.random() * 90);
+        } else {
+          setTimeout(function () { caret.classList.add('done'); }, 2200);
+        }
+      }
+      setTimeout(next, 350);
+    })();
+
+    // theme toggle, remembers the choice
+    (function () {
+      var btn = document.getElementById('theme-btn');
+
+      function current() {
+        return root.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      }
+
+      function label() {
+        btn.textContent = current() === 'dark' ? 'Light mode' : 'Dark mode';
+      }
+
+      btn.addEventListener('click', function () {
+        var next = current() === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        label();
+      });
+
+      label();
+    })();
+
+    // highlight the section that is in view in the nav
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+      var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+
+      if (!('IntersectionObserver' in window)) return;
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (a) {
+            a.setAttribute('aria-current', a.getAttribute('href') === '#' + entry.target.id ? 'true' : 'false');
+          });
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+
+      sections.forEach(function (s) { if (s) observer.observe(s); });
+    })();
+
+    // filter projects by technology
+    (function () {
+      var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+      var projects = Array.prototype.slice.call(document.querySelectorAll('.project'));
+      var status = document.getElementById('filter-status');
+      var active = null;
+
+      function uses(project, tag) {
+        return project.dataset.tech.split(' ').indexOf(tag) !== -1;
+      }
+
+      chips.forEach(function (chip) {
+        var n = projects.filter(function (p) { return uses(p, chip.dataset.tag); }).length;
+        var count = document.createElement('span');
+        count.className = 'count';
+        count.textContent = n;
+        chip.appendChild(count);
+      });
+
+      function apply() {
+        projects.forEach(function (p) {
+          var match = !active || uses(p, active);
+          p.classList.toggle('is-dim', !match);
+          p.classList.toggle('is-match', !!active && match);
+        });
+
+        chips.forEach(function (chip) {
+          chip.setAttribute('aria-pressed', chip.dataset.tag === active ? 'true' : 'false');
+        });
+
+        if (!active) {
+          status.textContent = '';
+          return;
+        }
+
+        var chip = chips.filter(function (c) { return c.dataset.tag === active; })[0];
+        var name = chip.firstChild.textContent;
+        var n = projects.filter(function (p) { return uses(p, active); }).length;
+        status.textContent = n + ' of ' + projects.length + ' projects use ' + name + '. ';
+
+        var clear = document.createElement('button');
+        clear.type = 'button';
+        clear.className = 'clear';
+        clear.textContent = 'Clear filter';
+        clear.addEventListener('click', function () { active = null; apply(); });
+        status.appendChild(clear);
+      }
+
+      chips.forEach(function (chip) {
+        chip.setAttribute('aria-pressed', 'false');
+        chip.addEventListener('click', function () {
+          active = active === chip.dataset.tag ? null : chip.dataset.tag;
+          apply();
+        });
+      });
+    })();
+
+    // copy the email address
+    (function () {
+      var btn = document.getElementById('copy-btn');
+      var out = document.getElementById('copy-status');
+      var address = 'sheemashariq10@gmail.com';
+
+      function done(ok) {
+        out.textContent = ok ? 'Copied' : 'Copy failed, please select it manually: ' + address;
+        setTimeout(function () { out.textContent = ''; }, 2500);
+      }
+
+      btn.addEventListener('click', function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(address).then(function () { done(true); }, function () { done(false); });
+        } else {
+          done(false);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
