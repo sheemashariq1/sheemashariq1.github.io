@@ -10,66 +10,84 @@
   <meta property="og:description" content="Computer Science student at Jamia Millia Islamia building AI-powered web products.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234b3fe4'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='Georgia,serif'%3ES%3C/text%3E%3C/svg%3E">
-  
-  <!-- Curated typography: Fraunces (editorial serif) and Figtree (clean human sans) -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <script>
-    // Set theme before paint to prevent flashing
-    try {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.dataset.theme = savedTheme;
-      }
-    } catch (e) {}
-  </script>
-
+<script>
+  let theme = null;
+  try { theme = localStorage.getItem('theme'); } catch (e) {}
+  if (!['light', 'dark', 'paper', 'forest'].includes(theme)) {
+    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = theme;
+</script>
+  
   <style>
-    :root {
-      --bg: #f5f4fa;
-      --surface: #eae8f5;
-      --surface-hover: #e2e0f0;
-      --ink: #161528;
-      --muted: #5e5b78;
-      --line: #d9d7e7;
-      --accent: #4b3fe4;
-      --accent-soft: rgba(75, 63, 228, 0.08);
-      --accent-hover: #3c30d6;
-      --serif: "Fraunces", Georgia, serif;
-      --sans: "Figtree", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --mono: "JetBrains Mono", monospace;
-      color-scheme: light;
-    }
+   
+ :root {
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Figtree", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", monospace;
+}
 
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #11101d;
-        --surface: #1b1a2d;
-        --surface-hover: #23223a;
-        --ink: #eeeef8;
-        --muted: #9e9cb9;
-        --line: #292842;
-        --accent: #a599ff;
-        --accent-soft: rgba(165, 153, 255, 0.12);
-        --accent-hover: #b8adff;
-        color-scheme: dark;
-      }
-    }
+:root,
+:root[data-theme="light"] {
+  --bg: #f5f4fa;
+  --surface: #eae8f5;
+  --surface-hover: #e2e0f0;
+  --ink: #161528;
+  --muted: #5e5b78;
+  --line: #d9d7e7;
+  --accent: #4b3fe4;
+  --accent-hover: #3c30d6;
+  --accent-soft: rgba(75, 63, 228, 0.08);
+  --on-accent: #ffffff;
+  color-scheme: light;
+}
 
-    :root[data-theme="dark"] {
-      --bg: #11101d;
-      --surface: #1b1a2d;
-      --surface-hover: #23223a;
-      --ink: #eeeef8;
-      --muted: #9e9cb9;
-      --line: #292842;
-      --accent: #a599ff;
-      --accent-soft: rgba(165, 153, 255, 0.12);
-      --accent-hover: #b8adff;
-      color-scheme: dark;
-    }
+:root[data-theme="dark"] {
+  --bg: #11101d;
+  --surface: #1b1a2d;
+  --surface-hover: #23223a;
+  --ink: #eeeef8;
+  --muted: #9e9cb9;
+  --line: #292842;
+  --accent: #a599ff;
+  --accent-hover: #b8adff;
+  --accent-soft: rgba(165, 153, 255, 0.12);
+  --on-accent: #11101d;
+  color-scheme: dark;
+}
+
+:root[data-theme="paper"] {
+  --bg: #f6f3ec;
+  --surface: #ece7da;
+  --surface-hover: #e4ded0;
+  --ink: #1c1b19;
+  --muted: #625e56;
+  --line: #dcd6c8;
+  --accent: #b83a09;
+  --accent-hover: #9a3007;
+  --accent-soft: rgba(184, 58, 9, 0.08);
+  --on-accent: #ffffff;
+  color-scheme: light;
+}
+
+:root[data-theme="forest"] {
+  --bg: #0f1a16;
+  --surface: #16251f;
+  --surface-hover: #1d3029;
+  --ink: #e8f1ec;
+  --muted: #95aaa0;
+  --line: #223830;
+  --accent: #6ee7a8;
+  --accent-hover: #8ff0bd;
+  --accent-soft: rgba(110, 231, 168, 0.12);
+  --on-accent: #0f1a16;
+  color-scheme: dark;
+}
 
     * { box-sizing: border-box; }
 
@@ -116,7 +134,6 @@
       gap: 84px;
     }
 
-    /* Left rail stays in view while the page scrolls */
     .rail {
       position: sticky;
       top: 0;
@@ -173,29 +190,30 @@
       padding-left: 18px;
     }
 
-    .theme-btn {
-      margin-top: auto;
-      align-self: flex-start;
-      padding: 7px 16px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--ink);
-      font: inherit;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
+   .themes {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  align-self: flex-start;
+}
 
-    .theme-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-soft);
-    }
+.swatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--swatch-bg) 50%, var(--swatch-accent) 50%);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.swatch:hover { transform: scale(1.12); }
+
+.swatch[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
 
     main {
       padding: 72px 0 60px;
@@ -324,7 +342,6 @@
       font-size: 15px;
     }
 
-    /* Filter chips */
     .chips {
       display: flex;
       flex-wrap: wrap;
@@ -357,13 +374,10 @@
     }
 
     .chip[aria-pressed="true"] {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
-    }
-    :root[data-theme="dark"] .chip[aria-pressed="true"] {
-      color: #11101d;
-    }
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
 
     .chip .count {
       margin-left: 6px;
@@ -392,7 +406,6 @@
       cursor: pointer;
     }
 
-    /* Projects */
     .projects {
       border-bottom: 1px solid var(--line);
     }
@@ -537,7 +550,6 @@
       font-weight: 500;
     }
 
-    /* Architecture flow diagram */
     .flow {
       margin: 20px 0 10px;
     }
@@ -587,7 +599,6 @@
       background: var(--accent);
     }
 
-    /* Rows: Roles, Experience, Education */
     .rows {
       border-bottom: 1px solid var(--line);
     }
@@ -625,7 +636,6 @@
       padding-top: 2px;
     }
 
-    /* Tech skills groups */
     .group + .group {
       margin-top: 26px;
     }
@@ -720,10 +730,10 @@
     }
 
     .copy-btn.copied {
-      background: #10b981;
-      border-color: #10b981;
-      color: #ffffff;
-    }
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
 
     footer {
       margin-top: 96px;
@@ -736,7 +746,6 @@
       align-items: center;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 880px) {
       .layout {
         display: block;
@@ -774,9 +783,7 @@
         padding-left: 14px;
       }
 
-      .theme-btn {
-        margin-top: 18px;
-      }
+      .themes { margin-top: 18px; }
 
       main {
         padding-top: 40px;
@@ -853,10 +860,12 @@
         </ul>
       </nav>
 
-      <button class="theme-btn" id="theme-btn" type="button" aria-label="Toggle visual theme">
-        <span id="theme-icon">🌙</span>
-        <span id="theme-label">Dark mode</span>
-      </button>
+      <div class="themes" role="group" aria-label="Colour theme">
+  <button class="swatch" type="button" data-theme="light" aria-label="Light theme" title="Light" style="--swatch-bg: #f5f4fa; --swatch-accent: #4b3fe4"></button>
+  <button class="swatch" type="button" data-theme="dark" aria-label="Dark theme" title="Dark" style="--swatch-bg: #11101d; --swatch-accent: #a599ff"></button>
+  <button class="swatch" type="button" data-theme="paper" aria-label="Paper theme" title="Paper" style="--swatch-bg: #f6f3ec; --swatch-accent: #b83a09"></button>
+  <button class="swatch" type="button" data-theme="forest" aria-label="Forest theme" title="Forest" style="--swatch-bg: #0f1a16; --swatch-accent: #6ee7a8"></button>
+</div>
     </aside>
 
     <main>
@@ -868,7 +877,6 @@
       
       <p class="status">Open to internships and project collaborations</p>
 
-      <!-- Work Section -->
       <section id="work">
         <h2>Work</h2>
         <p class="section-note">Four projects I have built. Open one for the details, or pick a technology to see where I used it.</p>
@@ -894,7 +902,6 @@
 
         <div class="projects">
 
-          <!-- Project 1: Exmentify -->
           <details class="project" data-tech="python fastapi javascript gemini docker aws" open>
             <summary>
               <span>
@@ -935,7 +942,6 @@
             </div>
           </details>
 
-          <!-- Project 2: exmentify-ml -->
           <details class="project" data-tech="python fastapi scikit-learn langchain gemini">
             <summary>
               <span>
@@ -959,7 +965,6 @@
             </div>
           </details>
 
-          <!-- Project 3: MNC Management System -->
           <details class="project" data-tech="python fastapi streamlit mysql docker aws github-actions pytest">
             <summary>
               <span>
@@ -984,8 +989,7 @@
               </ul>
             </div>
           </details>
-
-          <!-- Project 4: KisanConnect -->
+          
           <details class="project" data-tech="javascript typescript react gemini">
             <summary>
               <span>
@@ -1012,7 +1016,6 @@
         </div>
       </section>
 
-      <!-- Experience Section -->
       <section id="experience">
         <h2>Experience</h2>
         <div class="rows" style="margin-top: 24px;">
@@ -1038,8 +1041,7 @@
           </div>
         </div>
       </section>
-
-      <!-- Community Section -->
+      
       <section id="community">
         <h2>Community</h2>
         <div class="rows" style="margin-top: 24px;">
@@ -1064,7 +1066,6 @@
         </div>
       </section>
 
-      <!-- Tech Section -->
       <section id="tech">
         <h2>Tech</h2>
         <div style="margin-top: 24px;">
@@ -1089,7 +1090,6 @@
         </div>
       </section>
 
-      <!-- Education Section -->
       <section id="education">
         <h2>Education</h2>
         <div class="rows" style="margin-top: 24px;">
@@ -1116,7 +1116,6 @@
         </ul>
       </section>
 
-      <!-- Contact Section -->
       <section id="contact">
         <h2>Contact</h2>
         <p class="section-note">I'm open to internships and project collaborations. Email is the quickest way to reach me.</p>
@@ -1146,7 +1145,6 @@
     const root = document.documentElement;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 1. Streaming intro hero line
     (function initHeroStream() {
       const el = document.getElementById('hero-line');
       if (!el || reduceMotion) return;
@@ -1179,7 +1177,6 @@
       setTimeout(next, 320);
     })();
 
-    // 2. Currently typing/deleting phrase loop
     (function initTypingLoop() {
       const el = document.getElementById('now-text');
       if (!el || reduceMotion) return;
@@ -1231,7 +1228,6 @@
       setTimeout(tick, 2800);
     })();
 
-    // 3. Scroll reveal for main sections
     (function initScrollReveal() {
       if (reduceMotion || !('IntersectionObserver' in window)) return;
 
@@ -1250,35 +1246,21 @@
       });
     })();
 
-    // 4. Clean theme toggle with persistent state
-    (function initTheme() {
-      const btn = document.getElementById('theme-btn');
-      const label = document.getElementById('theme-label');
-      const icon = document.getElementById('theme-icon');
+   (function initTheme() {
+  const swatches = Array.from(document.querySelectorAll('.swatch'));
 
-      function currentTheme() {
-        return root.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      }
+  function setTheme(name, save) {
+    root.dataset.theme = name;
+    swatches.forEach((s) => s.setAttribute('aria-pressed', String(s.dataset.theme === name)));
+    if (save) {
+      try { localStorage.setItem('theme', name); } catch (e) {}
+    }
+  }
 
-      function updateUI() {
-        const dark = currentTheme() === 'dark';
-        if (label) label.textContent = dark ? 'Light mode' : 'Dark mode';
-        if (icon) icon.textContent = dark ? '☀️' : '🌙';
-      }
+  swatches.forEach((s) => s.addEventListener('click', () => setTheme(s.dataset.theme, true)));
+  setTheme(root.dataset.theme, false);
+})();
 
-      btn.addEventListener('click', () => {
-        const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        root.dataset.theme = next;
-        try {
-          localStorage.setItem('theme', next);
-        } catch (e) {}
-        updateUI();
-      });
-
-      updateUI();
-    })();
-
-    // 5. Highlight active section in left rail nav
     (function initNavSpy() {
       const links = Array.from(document.querySelectorAll('.nav a'));
       const sections = links.map((a) => document.querySelector(a.getAttribute('href')));
@@ -1300,7 +1282,6 @@
       });
     })();
 
-    // 6. Technology filter chips
     (function initTechFilter() {
       const chips = Array.from(document.querySelectorAll('.chip'));
       const projects = Array.from(document.querySelectorAll('.project'));
@@ -1311,8 +1292,7 @@
         const list = (project.dataset.tech || '').split(' ');
         return list.includes(tag.toLowerCase());
       }
-
-      // Populate counts
+      
       chips.forEach((chip) => {
         const tag = chip.dataset.tag.toLowerCase();
         const count = projects.filter((p) => uses(p, tag)).length;
@@ -1328,7 +1308,6 @@
           p.classList.toggle('is-dim', !match);
           p.classList.toggle('is-match', Boolean(active && match));
           
-          // Auto-expand matched projects when filtering
           if (active && match) {
             p.open = true;
           }
@@ -1369,7 +1348,6 @@
       });
     })();
 
-    // 7. Copy email address with smooth button feedback
     (function initCopyEmail() {
       const btn = document.getElementById('copy-btn');
       const status = document.getElementById('copy-status');
